@@ -16,7 +16,7 @@ script:
   - vendor/bin/phpunit
 
 after_script:
-  - codeclimate-test-reporter < lcov.info
+  - vendor/bin/test-reporter
 
 addons:
   code_climate:
