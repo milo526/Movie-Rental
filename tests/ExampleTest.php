@@ -15,5 +15,13 @@ class ExampleTest extends TestCase
     {
         $this->visit('/')
              ->see('Login');
+
+        $this->visit('/')
+             ->click('Login')
+             ->type('debug@localhost.local', 'email')
+             ->type('test password', 'password')
+             ->press('Login')
+             ->click('Home')
+             ->see('Test User');
     }
 }
