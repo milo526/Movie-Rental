@@ -21,6 +21,7 @@ after_script:
 - vendor/bin/test-reporter
 
 after_success:
+- eval "$(ssh-agent -s)" #start the ssh agent
 - chmod 600 deploy-key
 - ssh-add deploy_key
 - git remote add deploy ssh://git@8t2.eu/var/www/public_html.git
