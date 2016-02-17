@@ -6,4 +6,4 @@
 [![Issue Count](https://codeclimate.com/github/milo526/Movie-Rental/badges/issue_count.svg)](https://codeclimate.com/github/milo526/Movie-Rental)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
-For installation instructions see [installation](/INSTALLATION.MD).
+For installation instructions see [installation](https://github.com/milo526/Movie-Rental/blob/master/INSTALLATION.md).
