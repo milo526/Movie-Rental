@@ -21,13 +21,8 @@ after_script:
 - vendor/bin/test-reporter
 
 after_success:
-- eval "$(ssh-agent -s)" #start the ssh agent
-- chmod 600 deploy_key
-- ssh-add deploy_key
-- git remote add deploy ssh://git@8t2.eu/var/www/public_html.git
-- git push deploy
+
 
 addons:
   code_climate:
     repo_token: 12f8cd4dbac89897c959c6290aa67baa0a14469755e561ce2d46432fc2a8102a
-
