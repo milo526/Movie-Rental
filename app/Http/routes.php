@@ -26,6 +26,8 @@ use Tmdb\Laravel\Facades\Tmdb;
 
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/', 'IndexController@index');
+	
+	Route::get('/movie/{id}', 'MovieController@index');
 
     Route::auth();
 });

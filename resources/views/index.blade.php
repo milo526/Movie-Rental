@@ -16,8 +16,12 @@
         </div>
     </div>
     @inject('image', 'Tmdb\Helper\ImageHelper')
+
     @foreach ($movies as $movie)
-        {!! $image->getHtml($movie->getPosterImage(), 'w154', 260, 420) !!}
+        <a href="/movie/{{$movie->getId()}}">
+            {!! $image->getHtml($movie->getPosterImage(), 'w780', 260, 420) !!}
+        </a>
     @endforeach
+        
 </div>
 @endsection

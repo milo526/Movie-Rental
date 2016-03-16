@@ -28,7 +28,6 @@ class IndexController extends Controller
     public function index()
     {
         $popular = $this->movies->getPopular();
-
         return view('index')->with('movies', $popular);
     }
 }
