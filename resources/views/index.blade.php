@@ -13,7 +13,7 @@
                     <div class="lib-panel">
                         <div class="row box-shadow">
                             <div class="col-md-6 col-sm-12">
-                                {!! $image->getHtml($movie->getPosterImage(), 'w780', 260, 420) !!}
+                                {!! $image->getHtml($movie->getPosterImage(), 'w780', '100%') !!}
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="lib-row lib-header">

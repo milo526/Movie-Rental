@@ -13,5 +13,10 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss');
-    mix.version('public/css/app.css');
+
+    mix.styles('bootstrap-horizon.css');
+
+    mix.stylesIn("public/css");
+
+    mix.version('public/css/all.css');
 });
