@@ -4,24 +4,32 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Welcome</div>
-
-                <div class="panel-body">
-                    Your Application's Landing Page.
-                </div>
-            </div>
-        </div>
-    </div>
     @inject('image', 'Tmdb\Helper\ImageHelper')
 
-    @foreach ($movies as $movie)
-        <a href="/movie/{{$movie->getId()}}">
-            {!! $image->getHtml($movie->getPosterImage(), 'w780', 260, 420) !!}
-        </a>
-    @endforeach
+    <div class="row row-margin-bottom">
+        @foreach ($movies as $movie)
+            <div class="col-md-3 col-md-offset-1 col-sm-5 col-sm-offset-1 no-padding no-link lib-item" data-category="view">
+                <a href="/movie/{{ $movie->getId() }}">
+                    <div class="lib-panel">
+                        <div class="row box-shadow">
+                            <div class="col-md-12">
+                                {!! $image->getHtml($movie->getPosterImage(), 'w780', 260, 420) !!}
+                            </div>
+                            <div class="col-md-12">
+                                <div class="lib-row lib-header">
+                                    {{$movie->getTitle()}}
+                                    <div class="lib-header-seperator"></div>
+                                </div>
+                                <div class="lib-row lib-desc">
+                                    {{ str_limit($movie->getOverview(), $limit = 120, $end = '...') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
         
 </div>
 @endsection

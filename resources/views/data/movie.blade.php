@@ -23,10 +23,10 @@
              	<div class="panel-heading">Cast</div>
 
                 <div class="panel-body">
-                <ul>
-                    @foreach ($movie->getCredits()->getCast() as $person) 
-						<li> {{$person->getName()}} as {{$person->getCharacter()}}</li>
-					@endforeach
+	                <ul>
+	                    @foreach ($movie->getCredits()->getCast() as $person) 
+							<li> {{$person->getName()}} as {{$person->getCharacter()}}</li>
+						@endforeach
 					</ul>
                 </div>
             </div>
