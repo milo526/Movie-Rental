@@ -23,4 +23,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function rentals()
+    {
+        return $this->hasMany('App\Rental')->OrderBy('created_at', 'DESC');
+    }
+
+    public function rent($id)
+    {
+        $rental = new Rental;
+
+        $rental->user_id = $this->id;
+        $rental->movie_id = $id;
+
+        $rental->save();
+
+        return $rental;
+    }
 }

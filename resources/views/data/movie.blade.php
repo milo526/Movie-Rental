@@ -19,12 +19,20 @@
                 <table class="table">
                     <tr><td><b>Rating</b></td><td>{{$movie->getVoteAverage()}}</td></tr>
                     <tr><td><b>Release date</b></td><td>{{$movie->getReleaseDate()->format('d-m-y')}}</td></tr>
-                    <tr><td><b>Budget</b></td><td>${{number_format($movie->getBudget())}}</td></tr>
+                    @if ($movie->getBudget() > 0)
+                        <tr><td><b>Budget</b></td><td>${{number_format($movie->getBudget())}}</td></tr>
+                    @endif
                     @if ($movie->getRevenue() > 0)
                         <tr><td><b>Revenue</b></td><td>${{number_format($movie->getRevenue())}}</td></tr>
                     @endif
                 </table>
             </div>
+            @if (!Auth::guest())
+                <form action="/profile/rent/{{$movie->getId()}}" method="POST">
+                    {{ csrf_field() }}
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Rent"></input>
+                </form>
+            @endif
         </div>
         <div class="col-sm-8">
             <div class="panel panel-default">
@@ -59,8 +67,10 @@
                     <div class="row row-horizon"> 
                         @foreach ($movie->getCredits()->getCrew() as $person)
                             <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-                                {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
-                                {{$person->getName()}} {{$person->getJob()}}
+                                <a href="/crew/{{$person->getID()}}">
+                                    {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
+                                    {{$person->getName()}} {{$person->getJob()}}
+                                </a>
                             </div>
                         @endforeach
                     </div>

@@ -29,6 +29,11 @@ Route::group(['middleware' => ['web']], function () {
 	
 	Route::get('/movie/{id}', 'MovieController@index');
 	Route::get('/actor/{id}', 'ActorController@index');
-
+	Route::get('/crew/{id}', 'ActorController@index');
     Route::auth();
+
+    Route::group(['middleware' => ['auth']], function () {
+    	Route::get('/profile', 'ProfileController@index');
+    	Route::post('/profile/rent/{id}', 'ProfileController@rent');
+    });
 });

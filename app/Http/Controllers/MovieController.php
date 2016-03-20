@@ -23,4 +23,9 @@ class MovieController extends Controller{
         $movie = $this->movies->load($id);
         return view('data/movie')->with('movie', $movie);
     }
+
+    function get()
+    {
+        return $movies;
+    }
 }
