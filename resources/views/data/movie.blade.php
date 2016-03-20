@@ -10,7 +10,7 @@
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! $image->getHtml($movie->getPosterImage(), 'w780', '100%') !!}
+                    {!! $image->getHtml($movie->getPosterImage(), 'w780', '100%', '100%', 'poster_large') !!}
                 </div>
             </div>
 
@@ -42,8 +42,10 @@
                     <div class="row row-horizon"> 
                         @foreach ($movie->getCredits()->getCast() as $person)
                             <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-                                {!! $image->getHtml($person->getProfileImage(), 'w500', '100%') !!}
-                                {{$person->getName()}} as {{$person->getCharacter()}}
+                                <a href="/actor/{{$person->getID()}}">
+                                    {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
+                                    {{$person->getName()}} as {{$person->getCharacter()}}
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -57,7 +59,7 @@
                     <div class="row row-horizon"> 
                         @foreach ($movie->getCredits()->getCrew() as $person)
                             <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-                                {!! $image->getHtml($person->getProfileImage(), 'w500', '100%') !!}
+                                {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
                                 {{$person->getName()}} {{$person->getJob()}}
                             </div>
                         @endforeach

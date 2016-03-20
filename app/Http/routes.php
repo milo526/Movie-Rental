@@ -28,6 +28,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/', 'IndexController@index');
 	
 	Route::get('/movie/{id}', 'MovieController@index');
+	Route::get('/actor/{id}', 'ActorController@index');
 
     Route::auth();
 });
