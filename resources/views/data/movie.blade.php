@@ -6,6 +6,10 @@
 
 @section('content')
 <div class="container">
+    <div class="alert alert-success alert-dismissible hidden" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Succes!</strong> We added {{$movie->getTitle()}} to your shopping cart.
+    </div>
     <div class="row fluid">
         <div class="col-sm-4">
             <div class="panel panel-default">
@@ -28,10 +32,9 @@
                 </table>
             </div>
             @if (!Auth::guest())
-                <form action="/profile/rent/{{$movie->getId()}}" method="POST">
-                    {{ csrf_field() }}
-                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Rent"></input>
-                </form>
+                <button id="rent-button" class="btn btn-primary btn-lg btn-block" onclick="rent({{$movie->getId()}})">Rent</button>
+            @else
+                <button class="btn btn-danger btn-lg btn-block" disabled="disabled">Login to rent</button>
             @endif
         </div>
         <div class="col-sm-8">
@@ -76,7 +79,25 @@
                     </div>
                 </div>
             </div>
+            @if($movie->getVideos())
+            <div class="panel panel-default">
+                <div class="panel-heading">Videos</div>
+
+                <div class="panel-body">
+                    <div class="row row-horizon"> 
+                        @foreach ($movie->getVideos() as $video)
+                            <div class="col-sm-12 col-md-6">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{$video->getKey()}}" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
+<script src="{{ elixir('js/rent.js') }}"></script>
 @endsection

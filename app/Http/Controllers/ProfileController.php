@@ -17,9 +17,24 @@ class ProfileController extends Controller
         return view('user/profile');
     }
 
-    function rent($id)
+    function rent()
     {
+    	if(!isset($_POST['movie_id'])){
+    		return false;
+    	}
+
+    	$id = $_POST['movie_id'];
     	$rental = Auth::user()->rent($id);
-    	return view('user/profile')->with('rental', $rental);
+    	echo($rental->toJson());
+    }
+
+    function removeRent()
+    {
+        if(!isset($_POST['movie_id'])){
+            return false;
+        }
+
+        $id = $_POST['movie_id'];
+        echo(Auth::user()->removeRent($id));
     }
 }

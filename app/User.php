@@ -29,6 +29,28 @@ class User extends Authenticatable
         return $this->hasMany('App\Rental')->OrderBy('created_at', 'DESC');
     }
 
+    public function basketRentals()
+    {
+        return $this->hasMany('App\Rental')->whereNull('invoice_id');
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice');
+    }
+    
+    public function unpayedInvoices()
+    {
+        $invoices = $this->invoices;
+        $unpayed = [];
+        foreach ($invoices as $invoice) {
+            if(!$invoice->payed){
+                $unpayed[] = $invoice;
+            }
+        }
+        return $unpayed;
+    }    
+
     public function rent($id)
     {
         $rental = new Rental;
@@ -39,5 +61,14 @@ class User extends Authenticatable
         $rental->save();
 
         return $rental;
+    }
+
+    public function removeRent($id)
+    {
+        if($rental = Rental::find($id)){
+            $rental->delete();
+            return true;
+        }
+        return false;
     }
 }

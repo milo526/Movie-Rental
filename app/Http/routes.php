@@ -32,8 +32,11 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/crew/{id}', 'ActorController@index');
     Route::auth();
 
-    Route::group(['middleware' => ['auth']], function () {
-    	Route::get('/profile', 'ProfileController@index');
-    	Route::post('/profile/rent/{id}', 'ProfileController@rent');
+    Route::group(['middleware' => ['auth'], 'prefix' => 'profile'], function () {
+    	Route::get('/', 'ProfileController@index');
+    	Route::get('/rent', 'ProfileController@index');
+    	Route::post('/rent', 'ProfileController@rent');
+    	Route::get('/rent/delete', 'ProfileController@index');
+    	Route::post('/rent/delete', 'ProfileController@removeRent');
     });
 });

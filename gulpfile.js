@@ -15,8 +15,12 @@ elixir(function(mix) {
     mix.sass('app.scss');
 
     mix.styles('bootstrap-horizon.css');
-
+	mix.styles('bootstrap-navbar-cart.css');
     mix.stylesIn("public/css");
 
-    mix.version('public/css/all.css');
+    mix.scripts(['rent.js'], 'public/js/rent.js')
+    mix.scripts(['removeRent.js'], 'public/js/removeRent.js')
+    mix.scripts(['profile.js'], 'public/js/profile.js')
+
+    mix.version(['public/css/all.css', 'public/js/rent.js', 'public/js/removeRent.js', 'public/js/profile.js']);
 });

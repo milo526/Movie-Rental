@@ -54,13 +54,41 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                    <li><a href="{{ url('/login') }}">Login</a></li>
+                    <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+                        <li class="dropdown" id="cart" @if(count(Auth::User()->basketRentals) == 0) style="display: none;" @endif>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
+                                <span class="glyphicon glyphicon-shopping-cart"></span>
+
+                                <span id="rent-count" class="badge">{{count(Auth::User()->basketRentals)}}</span>
+                                
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-cart" role="menu">
+                                @foreach(Auth::User()->basketRentals as $rental)
+                                    <li id="cart{{$rental->id}}">
+                                        <span class="item">
+                                            <span class="item-left">
+                                                <span class="item-info">
+                                                    <span>{{$rental->getMovie()->getTitle()}}</span>
+                                                </span>
+                                            </span>
+                                            <span class="item-right">
+                                                <a class="btn btn-xs btn-danger pull-right" onclick="removeRent({{$rental->id}})">x</a>
+                                            </span>
+                                        </span>
+                                    </li>
+                                @endforeach
+                                <li class="divider"></li>
+                                <li><a class="text-center" href="">View Cart</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" claInboxss="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
+
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/profile') }}"><i class="fa fa-btn fa-user"></i>Profile</a></li>
@@ -78,6 +106,6 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="{{ elixir('js/removeRent.js') }}"></script>
 </body>
 </html>
