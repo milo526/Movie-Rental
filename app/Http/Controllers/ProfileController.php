@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Invoice;
+use App\Rental;
 
 use App\Http\Requests;
 

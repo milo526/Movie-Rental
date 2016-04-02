@@ -11,6 +11,10 @@ class Invoice extends Model
         return $this->hasMany('App\Rental')->OrderBy('created_at', 'DESC');
     }
 
+    public function user(){
+    	return $this->belongsTo('App\User');
+    }
+
     public function date()
     {
     	return date_create($this->created_at);

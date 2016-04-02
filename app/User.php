@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function basketRentals()
     {
-        return $this->hasMany('App\Rental')->whereNull('invoice_id');
+        return $this->rentals()->whereNull('invoice_id');
     }
 
     public function invoices()
@@ -70,5 +70,21 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function createInvoice($rentals)
+    {
+        $invoice = new Invoice;
+        $invoice->user_id = $this->id;
+        $invoice->save();
+
+        foreach ($rentals as $rental) {
+            if($rentalObject = Rental::findOrFail($rental)){
+                $rentalObject->invoice()->associate($invoice);
+                $rentalObject->save();
+            }
+        }
+
+        return $invoice;
     }
 }

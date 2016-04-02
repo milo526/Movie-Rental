@@ -81,7 +81,7 @@
                                     </li>
                                 @endforeach
                                 <li class="divider"></li>
-                                <li><a class="text-center" href="">View Cart</a></li>
+                                <li><a class="text-center" href="/profile#basket">View Cart</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

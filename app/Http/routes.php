@@ -25,18 +25,18 @@ use Tmdb\Laravel\Facades\Tmdb;
 */
 
 Route::group(['middleware' => ['web']], function () {
-	Route::get('/', 'IndexController@index');
+	Route::get('/', 'IndexController@index')->name('index');
 	
 	Route::get('/movie/{id}', 'MovieController@index');
 	Route::get('/actor/{id}', 'ActorController@index');
 	Route::get('/crew/{id}', 'ActorController@index');
     Route::auth();
 
-    Route::group(['middleware' => ['auth'], 'prefix' => 'profile'], function () {
-    	Route::get('/', 'ProfileController@index');
-    	Route::get('/rent', 'ProfileController@index');
+    Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'as' => 'profile::'], function () {
+    	Route::get('/', 'ProfileController@index')->name('index');
     	Route::post('/rent', 'ProfileController@rent');
-    	Route::get('/rent/delete', 'ProfileController@index');
     	Route::post('/rent/delete', 'ProfileController@removeRent');
+        Route::get('/invoice/{id}', 'InvoiceController@get')->name('invoice');
+        Route::post('/invoice', 'InvoiceController@make');
     });
 });

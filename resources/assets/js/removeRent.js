@@ -12,6 +12,24 @@ function removeRent(id){
                     if(currentCount == 0){
                         cart.hide();
                     }
+
+                    //Remove from profile if open
+                    var basketListItem = $('#basket' + id);
+                    if(basketListItem){
+                        basketListItem.remove();
+                        if (typeof invoiceMovieIDs !== 'undefined') {
+                            var index = invoiceMovieIDs.indexOf(id);
+                            if (index > -1) {
+                                invoiceMovieIDs.splice(index, 1);
+                            }
+
+                            if(invoiceMovieIDs.length > 0){   
+                                invoiceFooter.show();
+                            }else{
+                                invoiceFooter.hide();
+                            }
+                        }
+                    }
                 }
                 else {
                     //todo: display error;
