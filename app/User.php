@@ -1,11 +1,15 @@
 <?php
-
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Bican\Roles\Traits\HasRoleAndPermission;
+use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasRoleAndPermissionContract
 {
+    use HasRoleAndPermission , SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,20 +40,18 @@ class User extends Authenticatable
 
     public function invoices()
     {
-        return $this->hasMany('App\Invoice');
+        return $this->hasMany('App\Invoice')->OrderBy('created_at', 'DESC')->limit(10);
     }
-    
+
+    public function payedInvoices()
+    {
+        return $this->invoices()->where('payed', 1);
+    }
+
     public function unpayedInvoices()
     {
-        $invoices = $this->invoices;
-        $unpayed = [];
-        foreach ($invoices as $invoice) {
-            if(!$invoice->payed){
-                $unpayed[] = $invoice;
-            }
-        }
-        return $unpayed;
-    }    
+        return $this->invoices()->where('payed', 0);
+    }   
 
     public function rent($id)
     {

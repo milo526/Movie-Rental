@@ -46,40 +46,45 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Cast</div>
-
-                <div class="panel-body">
-                    <div class="row row-horizon"> 
-                        @foreach ($movie->getCredits()->getCast() as $person)
-                            <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-                                <a href="/actor/{{$person->getID()}}">
-                                    {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
-                                    {{$person->getName()}} as {{$person->getCharacter()}}
-                                </a>
+            @if(count($movie->getCredits()->getCast())>0)
+            <h1>Cast</h1>
+            <div class="row row-horizon"> 
+                @foreach ($movie->getCredits()->getCast() as $person)
+                    <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+                        <a href="/actor/{{$person->getID()}}">
+                            <div class="thumbnail">
+                                {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
+                                <div class="caption">
+                                    <h4>{{$person->getName()}}</h4>
+                                    {{$person->getCharacter()}}
+                                </div>
                             </div>
-                        @endforeach
+                        </a>
                     </div>
-                </div>
+                @endforeach
             </div>
+            @endif
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Crew</div>
-
-                <div class="panel-body">
-                    <div class="row row-horizon"> 
-                        @foreach ($movie->getCredits()->getCrew() as $person)
-                            <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-                                <a href="/crew/{{$person->getID()}}">
-                                    {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
-                                    {{$person->getName()}} {{$person->getJob()}}
-                                </a>
+            @if(count($movie->getCredits()->getCrew())>0)
+            <h1>Crew</h1>
+            <div class="row row-horizon"> 
+                @foreach ($movie->getCredits()->getCrew() as $person)
+                    <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+                        <a href="/crew/{{$person->getID()}}">
+                            <div class="thumbnail">
+                                {!! $image->getHtml($person->getProfileImage(), 'w500', '100%', '100%', 'person') !!}
+                                <div class="caption">
+                                    <h4>{{$person->getName()}}</h4>
+                                    {{$person->getJob()}}
+                                </div>
                             </div>
-                        @endforeach
+                        </a>
                     </div>
-                </div>
+                @endforeach
             </div>
-            @if($movie->getVideos())
+            @endif
+
+            @if(count($movie->getVideos())>0)
             <div class="panel panel-default">
                 <div class="panel-heading">Videos</div>
 

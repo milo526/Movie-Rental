@@ -23,17 +23,28 @@ class InvoiceController extends Controller
         return Redirect::route('profile::index')->withErrors(['Could not find invoice!']);
     }
 
-    function make(){
-        if(!isset($_POST['rentals'])){
+    function make(Request $request){
+        $rentals = $request->input('rentals');
+        if(!isset($rentals)){
             abort(400);
         }
 
-        if(!$_POST['rentals']){
+        if(!$rentals){
             redirect()->route('profile::index');
         }
 
-        $rentals = $_POST['rentals'];
         $invoice = Auth::User()->createInvoice($rentals);
-        echo($invoice->toJson());
+        echo('{"invoice":'.$invoice->toJson().','.'"rentals":'.json_encode($rentals).'}');
+    }
+
+    function pay($id){
+        if($invoice = Invoice::find($id)){
+            if(Auth::user()->can('get', $invoice)){
+                $invoice->payed = true;
+                $invoice->save();
+                return Redirect::route('profile::index')->with('invoice', 'Succesfully payed invoice!');
+            }
+        } 
+        return Redirect::route('profile::index')->withErrors(['Could not find invoice!']);
     }
 }

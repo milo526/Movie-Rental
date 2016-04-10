@@ -37,22 +37,20 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Movies</div>
-
-                <div class="panel-body">
-                    <div class="row row-horizon"> 
-                        @foreach ($person->getMovieCredits()->getCast() as $castMember)
-                            <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-                                <a href="/movie/{{$castMember->getID()}}">
-                                    {!! $image->getHtml($castMember->getPosterImage(), 'w500', '100%', '100%', 'poster') !!}
-                                    {{$castMember->getCharacter()}}
-                                </a>
+            <h1>Movies</h1>
+            <div class="row row-horizon"> 
+                @foreach ($person->getMovieCredits()->getCast() as $person)
+                    <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+                        <a href="/movie/{{$person->getID()}}">
+                            <div class="thumbnail">
+                                {!! $image->getHtml($person->getPosterImage(), 'w500', '100%', '100%', 'person') !!}
+                                <div class="caption">
+                                    <h4>{{$person->getCharacter()}}</h4>
+                                </div>
                             </div>
-
-                        @endforeach
+                        </a>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

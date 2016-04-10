@@ -32,11 +32,23 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/crew/{id}', 'ActorController@index');
     Route::auth();
 
+    Route::group(['prefix' => 'search', 'as' => 'search::'], function () {
+        Route::get('/movie/{query}/{page?}', 'SearchController@searchMovie')->name('movie')->where('page', '[0-9]+');
+        Route::get('/person/{query}/{page?}', 'SearchController@searchPerson')->name('person')->where('page', '[0-9]+');
+        Route::get('/{query}/{page?}', 'SearchController@searchMulti')->name('multi')->where('page', '[0-9]+');
+    });
+
     Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'as' => 'profile::'], function () {
     	Route::get('/', 'ProfileController@index')->name('index');
     	Route::post('/rent', 'ProfileController@rent');
     	Route::post('/rent/delete', 'ProfileController@removeRent');
         Route::get('/invoice/{id}', 'InvoiceController@get')->name('invoice');
         Route::post('/invoice', 'InvoiceController@make');
+        Route::post('/invoice/pay/{id}', 'InvoiceController@pay')->name('payInvoice');
     });
+
+    Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' => 'admin::'], function () {
+            Route::get('/', 'ProfileController@index')->name('index');
+    });
+
 });

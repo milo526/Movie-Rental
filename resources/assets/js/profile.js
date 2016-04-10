@@ -1,4 +1,4 @@
-var invoiceMovieIDs = [];
+var invoiceRentalIDs = [];
 
 function addToInvoice(id){
     var invoiceButton = $('#invoice'+id);
@@ -11,27 +11,37 @@ function addToInvoice(id){
 }
 
 function removeFromInvoice(id){
-    var invoiceButton = $('#invoice'+id);
-    invoiceButton.addClass('btn-default');
-    invoiceButton.removeClass('btn-danger');
-    invoiceButton.text('Add to invoice');
-    invoiceButton.attr("onclick", "addToInvoice("+id+")");
-
+    var invoiceButton = $('#invoice'+id)
+    if(typeof invoiceButton !== 'undefined'){
+        invoiceButton.addClass('btn-default');
+        invoiceButton.removeClass('btn-danger');
+        invoiceButton.text('Add to invoice');
+        invoiceButton.attr("onclick", "addToInvoice("+id+")");
+    }
+    console.log('Updating invoice');
     updateInvoice(id, false);
+}
+
+function deleteRental(id){
+    var basketListItem = $('#basket' + id);
+    if(basketListItem){
+        basketListItem.remove();
+    }
+    console.log('Removing from rental' + id);
+    removeFromInvoice(id);
 }
 
 function updateInvoice(id, add){
     var invoiceFooter = $('#invoiceFooter');
     if(add){
-        invoiceMovieIDs.push(id);
+        invoiceRentalIDs.push(id);
     }else{
-        var index = invoiceMovieIDs.indexOf(id);
-        if (index > -1) {
-            invoiceMovieIDs.splice(index, 1);
-        }
+        invoiceRentalIDs = jQuery.grep(invoiceRentalIDs, function(value) {
+            return value != id;
+        });
     }
-
-    if(invoiceMovieIDs.length > 0){   
+    console.log(invoiceRentalIDs);
+    if(invoiceRentalIDs.length > 0){   
         invoiceFooter.show();
     }else{
         invoiceFooter.hide();
@@ -39,21 +49,12 @@ function updateInvoice(id, add){
 }
 
 function createInvoice(){
-    $.post("/profile/invoice?_token=" + token, {rentals: invoiceMovieIDs}, function(result){
+    $.post("/profile/invoice?_token=" + token, {rentals: invoiceRentalIDs}, function(result){
         var invoice = JSON.parse(result);
-        var date = new Date();
-        var dateString;
-
-        date.setDate(date.getDate() + 20);
-
-        dateString = ('0' + date.getDate()).slice(-2) + '/'
-                     + ('0' + (date.getMonth()+1)).slice(-2) + '/'
-                     + date.getFullYear();
-        var id = invoice['id'];
-        $('#table-invoice tr:last').after("<tr><td>"+id+"</td><td>"+dateString+"</td><td><span class='glyphicon glyphicon-ok text-warning' aria-hidden='true'></span></td><td class='text-right'><div class='btn-group' role='group'><a href='/profile/invoice/"+id+" class='btn btn-info' role='button'>Show</a><button class='btn btn-primary' onclick=''>Pay</button></div></td></tr>");
+        var rentals = invoice['rentals'];
+        for (var i = rentals.length - 1; i >= 0; i--) {
+            var rentalID = rentals[i]
+            deleteRental(rentalID);
+        }  
     });
-}
-
-function payInvoice(){
-    var invoice
 }

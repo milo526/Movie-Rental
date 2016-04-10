@@ -39,7 +39,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('index') }}">
                     Movie-Rental
                 </a>
             </div>
@@ -91,8 +91,11 @@
 
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/profile') }}"><i class="fa fa-btn fa-user"></i>Profile</a></li>
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ route('profile::index') }}"><i class="fa fa-btn fa-user"></i>Profile</a></li>
+                                @role('admin')
+                                <li><a href="{{ route('admin::index') }}"><i class="fa fa-btn fa-user"></i>Admin</a></li>
+                                @endrole
+                                <li><a href="{{ url('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
                     @endif

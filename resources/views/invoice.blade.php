@@ -132,6 +132,15 @@
                 </div>
             </div>
         </div>
+        @if(!$invoice->payed)
+        <div class="row hidden-print">
+            <div class="col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+                {{Form::open(['route' => ['profile::payInvoice', $invoice->id]])}}
+                    <input type="submit" class="btn btn-primary btn-block btn-lg" value="Pay">
+                {{Form::close()}}
+            </div>
+        </div>
+        @endif
     </div>
 </body>
 </html>

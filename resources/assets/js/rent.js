@@ -19,7 +19,7 @@ function rent(id){
                         cart.show();
                     }
                     rentCount.text(currentCount + 1);
-                    $('#myTable tr:last').after();
+
                     cartList.prepend('<li id="cart'+rental["id"]+'"><span class="item"><span class="item-left"><span class="item-info"><span>'+rental["MovieName"]+'</span></span></span><span class="item-right"><a class="btn btn-xs btn-danger pull-right" onclick="removeRent('+rental["id"]+')">x</a></span></span></li>');
                 }
                 else {

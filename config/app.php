@@ -160,6 +160,8 @@ return [
          * Custom Service Providers...
          */
         'Tmdb\Laravel\TmdbServiceProvider',
+        'Collective\Html\HtmlServiceProvider',
+        'Bican\Roles\RolesServiceProvider',
 
     ],
 
@@ -208,6 +210,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Form' => 'Collective\Html\FormFacade',
+        'Html' => 'Collective\Html\HtmlFacade',
     ],
 
 ];
