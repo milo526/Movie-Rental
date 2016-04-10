@@ -14,7 +14,7 @@
 	        <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
 	            <a href="/movie/{{$movie->getID()}}">
 	                <div class="thumbnail">
-	                    {!! $image->getHtml($movie->getPosterImage(), 'w500', '100%', '100%', 'person') !!}
+	                    {!! $image->getHtml($movie->getPosterImage(), 'w780', '100%', '100%', 'poster_large') !!}
 	                    <div class="caption">
 	                        <h4>{{$movie->getTitle()}}</h4>
 	                    </div>

@@ -21,6 +21,24 @@ class SearchController extends Controller{
         
     }
 
+    function post(Request $request){
+        $this->validate($request, [
+            'query' => 'required',
+        ]); 
+        $query = $request->input('query');
+
+        if(stripos($query, 'Movie:') !== false){
+            $query = str_ireplace('Movie:', '', $query);
+            return redirect()->route('search::movie', [$query])->withInput();
+        }
+
+        if(stripos($query, 'Actor:') !== false){
+            $query = str_ireplace('Actor:', '', $query);
+            return redirect()->route('search::person', [$query])->withInput();
+        }
+        return redirect()->route('search::multi', [$query])->withInput();
+    }
+
     function searchMulti($searchQuery, $page = 1)
     {
         $movies = $this->getMovies($searchQuery, $page);

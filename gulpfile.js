@@ -16,6 +16,7 @@ elixir(function(mix) {
 
     mix.styles('bootstrap-horizon.css');
 	mix.styles('bootstrap-navbar-cart.css');
+	mix.styles('global.css');
     mix.stylesIn("public/css");
 
     mix.scripts(['rent.js'], 'public/js/rent.js')

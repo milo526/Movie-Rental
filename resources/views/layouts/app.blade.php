@@ -100,10 +100,15 @@
                         </li>
                     @endif
                 </ul>
+                <form class="navbar-form" id="search" role="search" action="/search" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="query" placeholder="Search" value="{{ old('query') }}">
+                        </div>
+                </form>
             </div>
         </div>
     </nav>
-
     @yield('content')
 
     <!-- JavaScripts -->

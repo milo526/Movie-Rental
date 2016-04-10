@@ -38,7 +38,7 @@ class GenerateRoles extends Command
      */
     public function handle()
     {
-        if(count(Role::where('name', 'Admin'))==0){
+        if(Role::where('name', 'Admin')->count() == 0){
             $adminRole = Role::create([
                 'name' => 'Admin',
                 'slug' => 'admin',
@@ -46,5 +46,7 @@ class GenerateRoles extends Command
                 'level' => 100, // optional, set to 1 by default
             ]);
         }
+
+        $this->info('Generated roles that did not exist');
     }
 }

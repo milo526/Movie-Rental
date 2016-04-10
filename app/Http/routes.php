@@ -26,6 +26,7 @@ use Tmdb\Laravel\Facades\Tmdb;
 
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/', 'IndexController@index')->name('index');
+    Route::get('/FAQ', 'FAQController@index')->name('faq');
 	
 	Route::get('/movie/{id}', 'MovieController@index');
 	Route::get('/actor/{id}', 'ActorController@index');
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::auth();
 
     Route::group(['prefix' => 'search', 'as' => 'search::'], function () {
+        Route::post('/', 'SearchController@post')->name('post');
         Route::get('/movie/{query}/{page?}', 'SearchController@searchMovie')->name('movie')->where('page', '[0-9]+');
         Route::get('/person/{query}/{page?}', 'SearchController@searchPerson')->name('person')->where('page', '[0-9]+');
         Route::get('/{query}/{page?}', 'SearchController@searchMulti')->name('multi')->where('page', '[0-9]+');
