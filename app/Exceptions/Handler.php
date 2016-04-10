@@ -49,6 +49,14 @@ class Handler extends ExceptionHandler
             return abort('405');
         }
 
+        if($e instanceof \Tmdb\Exception\TmdbApiException){
+            return abort('404');
+        }
+
+        if ($e instanceof \Bican\Roles\Exceptions\RoleDeniedException) {
+            return abort('403');
+        }
+
         return parent::render($request, $e);
     }
 }

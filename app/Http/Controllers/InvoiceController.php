@@ -16,7 +16,7 @@ class InvoiceController extends Controller
 
     function get($id){
         if($invoice = Invoice::find($id)){
-            if(Auth::user()->can('get', $invoice)){
+            if (Auth::user()->allowed('all.get.invoice', $invoice)) {
                 return view('invoice')->with('invoice', $invoice);
             }
         } 
@@ -39,7 +39,7 @@ class InvoiceController extends Controller
 
     function pay($id){
         if($invoice = Invoice::find($id)){
-            if(Auth::user()->can('get', $invoice)){
+            if (Auth::User()->allowed('all.pay.invoice', $invoice)) {
                 $invoice->payed = true;
                 $invoice->save();
                 return Redirect::route('profile::index')->with('invoice', 'Succesfully payed invoice!');

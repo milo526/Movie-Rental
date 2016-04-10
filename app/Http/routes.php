@@ -26,7 +26,13 @@ use Tmdb\Laravel\Facades\Tmdb;
 
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/', 'IndexController@index')->name('index');
-    Route::get('/FAQ', 'FAQController@index')->name('faq');
+    Route::group(['middleware' => ['auth'], 'prefix' => 'faq', 'as' => 'faq::'], function () {
+        Route::get('/', 'FAQController@index')->name('index');
+        Route::get('/create/{id?}', 'FAQController@create')->name('create')->where('id', '[0-9]+');
+            Route::post('/make', 'FAQController@make')->name('make');
+            Route::get('/edit/{id}', 'FAQController@edit')->name('edit');
+            Route::post('/edit/{id}', 'FAQController@postEdit')->name('postEdit');
+    });
 	
 	Route::get('/movie/{id}', 'MovieController@index');
 	Route::get('/actor/{id}', 'ActorController@index');
@@ -50,7 +56,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' => 'admin::'], function () {
-            Route::get('/', 'ProfileController@index')->name('index');
+        Route::get('/', 'ProfileController@index')->name('index');
     });
 
 });

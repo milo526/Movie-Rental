@@ -46,15 +46,15 @@
                     <div class="col-xs-6">
                         <address>
                             <strong>Billed To:</strong><br>
-                            {{Auth::User()->name}}<br>
-                            {{Auth::User()->email}}<br>
+                            {{$invoice->user->name}}<br>
+                            {{$invoice->user->email}}<br>
                         </address>
                     </div>
                     <div class="col-xs-6 text-right">
                         <address>
                             <strong>Shipped To:</strong><br>
-                            {{Auth::User()->name}}<br>
-                            {{Auth::User()->email}}<br>
+                            {{$invoice->user->name}}<br>
+                            {{$invoice->user->email}}<br>
                         </address>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                             <strong>Payed:</strong><br>
                             @if($invoice->payed)
                             {{date_create($invoice->payedAt)->format('d-m-y')}}<br>
-                            {{Auth::User()->email}}
+                            {{$invoice->user->email}}
                             @else
                             not payed
                             @endif

@@ -1,6 +1,6 @@
 @extends('layouts.error_layout')
 
-@section('title', 'Not found!')
+@section('title', 'Not allowed!')
 
 @section('content')
 <style type="text/css">
@@ -16,9 +16,9 @@
                 <h1>
                     Oops!</h1>
                 <h2>
-                    404 Not Found</h2>
+                    403 Forbidden</h2>
                 <div class="error-details">
-                    Sorry, an error has occured, Requested page not found!
+                    Sorry, you do not have permission to access this page!
                 </div>
                 <div class="error-actions">
                     <a href="{{route('index')}}" class="btn btn-primary btn-lg">
