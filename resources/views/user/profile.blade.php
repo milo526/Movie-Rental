@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', Auth::user()->name)
+@section('title', $user->name)
 
 @section('content')
 
@@ -26,24 +26,31 @@
 				<table class="table table-striped">
 					<tr>
 						<th>Name:</th>
-						<td>{{Auth::User()->name}}</td>
+						<td>{{$user->name}}</td>
 					</tr>
 					<tr>
 						<th>Email:</th>
-						<td>{{Auth::User()->email}}</td>
+						<td>{{$user->email}}</td>
 					</tr>
+                    <tr>
+                        <th>ID:</th>
+                        <td>{{$user->id}}</td>
+                    </tr>
 
 				</table>
+                @role('admin')
+                <a href="{{route('admin::permissions::edit', ['id'=>$user->id])}}" class="btn btn-primary btn-lg btn-block">Update Permissions</a>
+                @endrole
 			</div>
 		</div>
 
 		<div class="col-md-8 col-sm-6">
 			<div class="panel panel-primary" name="basket">
                 <div class="panel-heading">In Basket</div>
-                @if(count(Auth::User()->basketRentals)>0)
+                @if(count($user->basketRentals)>0)
                 <table class="table table-striped">
                 	<tr><th>Title</th><th>Rent date</th><th></th></tr>
-                    @foreach(Auth::User()->basketRentals as $rental)
+                    @foreach($user->basketRentals as $rental)
                     	<tr id="basket{{$rental->id}}">
                     		<td>{{$rental->getMovie()->getTitle()}}</td>
                     		<td>{{$rental->date()->format('d-m-y')}}</td>
@@ -72,12 +79,12 @@
                 @endif
                 <div class="panel-footer" id="invoiceFooter" style="display: none;"><a id="createInvoiceButton" class="btn btn-default btn-lg btn-block" onclick="createInvoice()">Create Invoice</a></div>
             </div>
-            @if(count(Auth::user()->unpayedInvoices)>0)
+            @if(count($user->unpayedInvoices)>0)
             <div class="panel panel-danger">
                 <div class="panel-heading panel">Unpayed Invoices</div>
                 <table class="table-invoice table table-striped">
                     <tr><th>ID</th><th>Date</th><th>Payed</th><th></th></tr>
-                    @foreach(Auth::User()->unpayedInvoices as $invoice)
+                    @foreach($user->unpayedInvoices as $invoice)
                         <tr>
                             <td>{{$invoice->id}}</td>
                             <td>{{$invoice->date()->format('d-m-y')}}</td>
@@ -96,12 +103,12 @@
             </div>
             @endif
 
-            @if(count(Auth::user()->payedInvoices)>0)
+            @if(count($user->payedInvoices)>0)
             <div class="panel panel-primary">
                 <div class="panel-heading panel">Invoices</div>
                 <table class="table-invoice table table-striped">
                 	<tr><th>ID</th><th>Date</th><th>Payed</th><th></th></tr>
-                    @foreach(Auth::User()->payedInvoices as $invoice)
+                    @foreach($user->payedInvoices as $invoice)
                     	<tr>
                     		<td>{{$invoice->id}}</td>
                     		<td>{{$invoice->date()->format('d-m-y')}}</td>

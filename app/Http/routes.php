@@ -30,7 +30,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['prefix' => 'faq', 'as' => 'faq::'], function () {
         Route::get('/', 'FAQController@index')->name('index');
 
-        Route::group(['middleware' => ['role:admin']], function () {
+        Route::group(['middleware' => ['permission:edit.faq']], function () {
             Route::get('/create/{id?}', 'FAQController@create')->name('create')->where('id', '[0-9]+');
             Route::post('/make', 'FAQController@make')->name('make');
             Route::get('/edit/{id}', 'FAQController@edit')->name('edit')->where('id', '[0-9]+');
@@ -62,10 +62,17 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/invoice/{id}', 'InvoiceController@get')->name('invoice');
         Route::post('/invoice', 'InvoiceController@make');
         Route::post('/invoice/pay/{id}', 'InvoiceController@pay')->name('payInvoice');
+        Route::group(['middleware' => ['role:admin']], function () {
+            Route::get('/{id}', 'ProfileController@from')->name('from');
+        });
     });
 
     Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' => 'admin::'], function () {
-        Route::get('/', 'ProfileController@index')->name('index');
+        Route::get('/', 'AdminController@index')->name('index');
+        Route::group(['prefix'=>'permissions', 'as'=>'permissions::'], function() {
+            Route::get('/{id}', 'PermissionController@get')->name('get');
+            Route::post('/{id}', 'PermissionController@edit')->name('edit');
+        });
     });
 
 });

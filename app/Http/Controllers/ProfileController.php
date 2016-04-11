@@ -8,6 +8,7 @@ use App\Invoice;
 use App\Rental;
 
 use App\Http\Requests;
+use App\User;
 
 
 class ProfileController extends Controller
@@ -16,7 +17,11 @@ class ProfileController extends Controller
 
     function index()
     {
-        return view('user/profile');
+        return view('user/profile')->with('user', Auth::user());
+    }
+
+    function from($id){
+        return view('user/profile')->with('user', User::findOrFail($id));
     }
 
     function rent()
