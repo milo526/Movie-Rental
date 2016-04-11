@@ -26,12 +26,21 @@ use Tmdb\Laravel\Facades\Tmdb;
 
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/', 'IndexController@index')->name('index');
-    Route::group(['middleware' => ['auth'], 'prefix' => 'faq', 'as' => 'faq::'], function () {
+
+    Route::group(['prefix' => 'faq', 'as' => 'faq::'], function () {
         Route::get('/', 'FAQController@index')->name('index');
-        Route::get('/create/{id?}', 'FAQController@create')->name('create')->where('id', '[0-9]+');
+
+        Route::group(['middleware' => ['role:admin']], function () {
+            Route::get('/create/{id?}', 'FAQController@create')->name('create')->where('id', '[0-9]+');
             Route::post('/make', 'FAQController@make')->name('make');
-            Route::get('/edit/{id}', 'FAQController@edit')->name('edit');
-            Route::post('/edit/{id}', 'FAQController@postEdit')->name('postEdit');
+            Route::get('/edit/{id}', 'FAQController@edit')->name('edit')->where('id', '[0-9]+');
+            Route::post('/edit/{id}', 'FAQController@postEdit')->name('postEdit')->where('id', '[0-9]+');
+
+            Route::get('/category/create', 'FAQController@createCategory')->name('category::create');
+            Route::post('/category/create', 'FAQController@makeCategory')->name('category::make');
+            Route::get('/category/edit/{id}', 'FAQController@editCategory')->name('category::edit')->where('id', '[0-9]+');
+            Route::post('/category/edit/{id}', 'FAQController@postEditCategory')->name('category::postEdit')->where('id', '[0-9]+');
+        });
     });
 	
 	Route::get('/movie/{id}', 'MovieController@index');

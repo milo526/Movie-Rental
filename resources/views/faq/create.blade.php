@@ -16,7 +16,13 @@
         @endif
         <div class="col-sm-8 col-sm-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Create FAQ Item</div>
+                <div class="panel-heading">
+                @if(isset($data['update']) && $data['update']===true)
+                    Update FAQ Item
+                @else
+                    Create FAQ Item
+                @endif
+                </div>
                 <div class="panel-body">
                     @if(isset($data['update']) && $data['update']===true)
                     <form id="contact" method="post" class="form" role="form" action="{{route('faq::postEdit', ['id'=> $data['id']])}}" method="post">

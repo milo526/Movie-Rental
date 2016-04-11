@@ -32,7 +32,7 @@ class FAQController extends Controller
     {
     	$validator = Validator::make($request->all(), [
         	'question' => 'required|max:255',
-        	'anwser' => 'required',
+        	'anwser' => 'required|max:255',
         	'category' => 'required',
     	]);
     	if ($validator->fails()) {
@@ -50,7 +50,7 @@ class FAQController extends Controller
     	$item->anwser = $request->input('anwser');
     	$item->save();
 
-    	return redirect()->route('faq')->with('status', 'FAQ added!');
+    	return redirect()->route('faq::index')->with('status', 'FAQ added!');
     }
 
     public function edit($id)
@@ -63,7 +63,7 @@ class FAQController extends Controller
     {
     	$validator = Validator::make($request->all(), [
         	'question' => 'required|max:255',
-        	'anwser' => 'required',
+        	'anwser' => 'required|max:255',
         	'category' => 'required',
     	]);
     	if ($validator->fails()) {
@@ -82,6 +82,55 @@ class FAQController extends Controller
     	$item->save();
 
     	return redirect()->route('faq::index')->with('status', 'FAQ updated!');
+    }
+
+    public function createCategory()
+    {
+        return view('faq/createCategory');
+    }
+
+    public function makeCategory(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255'
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                        ->route('faq::category::create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $item = new FAQCategory();
+        $item->title = $request->input('title');
+        $item->save();
+
+        return redirect()->route('faq::index')->with('status', 'Category added!');
+    }
+
+    public function editCategory($id)
+    {
+        $item = FAQCategory::find($id);
+        return view('faq/createCategory')->with('category', $item);
+    }
+
+    public function postEditCategory(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                        ->route('faq::category::edit', ["id" => $id])
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $item = FAQCategory::findOrFail($id);
+        $item->title = $request->input('title');
+        $item->save();
+
+        return redirect()->route('faq::index')->with('status', 'Category updated!');
     }
 
     private function createView($old = null, $category = null)

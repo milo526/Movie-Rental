@@ -24,7 +24,10 @@
                     {{$category->title}}
                 </h3>
                 @permission('create.faq')
-                    <a href="{{route('faq::create', ['id'=>$category->id])}}" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> New</a>
+                    <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                        <a href="{{route('faq::create', ['id'=>$category->id])}}" class="btn btn-primary">New</a>
+                        <a href="{{route('faq::category::edit', ['id'=>$category->id])}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                    </div>
                 @endpermission
                 <div class="clearfix"></div>
             </div>
